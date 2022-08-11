@@ -47,16 +47,16 @@ const Faq = () => {
   useLayoutEffect(() => {
     let element = ref.current;
 
-    ScrollTrigger.create({
-      trigger: element,
-      start: "top top",
-      end: "bottom top",
-      pin:true,
+    // ScrollTrigger.create({
+    //   trigger: element,
+    //   start: "top top",
+    //   end: "bottom top",
+    //   pin:true,
       
-      // pinSpacing: false,
-      scrub: true,
-      markers: true
-    });
+    //   // pinSpacing: false,
+    //   scrub: true,
+    //   markers: true
+    // });
 
     return () => {
       ScrollTrigger.kill();
