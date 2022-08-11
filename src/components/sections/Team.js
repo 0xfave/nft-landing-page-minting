@@ -11,7 +11,6 @@ import img7 from "../../assets/Nfts/bighead-6.svg";
 import img8 from "../../assets/Nfts/bighead-7.svg";
 import img9 from "../../assets/Nfts/bighead-8.svg";
 import img10 from "../../assets/Nfts/bighead-9.svg";
-import ETH from "../../assets/icons8-ethereum-48.png";
 import Confetti from "../Confetti";
 
 const Section = styled.section`
