@@ -33,7 +33,7 @@ const Container = styled.div`
 
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-content: center;
 `;
 
 const Box = styled.div`
@@ -47,16 +47,15 @@ const Faq = () => {
   useLayoutEffect(() => {
     let element = ref.current;
 
-    // ScrollTrigger.create({
-    //   trigger: element,
-    //   start: "top top",
-    //   end: "bottom top",
-    //   pin:true,
-      
-    //   // pinSpacing: false,
-    //   scrub: true,
-    //   markers: true
-    // });
+    ScrollTrigger.create({
+      trigger: element,
+      start: "top top",
+      end: "bottom top",
+      pin:true,
+      pinSpacing: false,
+      scrub: true,
+      // markers: true
+    });
 
     return () => {
       ScrollTrigger.kill();
@@ -64,7 +63,7 @@ const Faq = () => {
   }, []);
 
   return (
-    <Section>
+    <Section ref={ref}>
       <Title>Faq</Title>
       <Container>
         <Box>
