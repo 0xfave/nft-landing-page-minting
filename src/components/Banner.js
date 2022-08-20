@@ -19,7 +19,7 @@ const Section = styled.section`
   background-color: ${(props) => `rgba(${props.theme.textRgba},0.9)`};
 
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 
   overflow: hidden;
@@ -49,6 +49,9 @@ const Title = styled.h1`
   padding: 1rem 2rem;
   z-index: 10;
   width: 35%;
+  text-transform: capitalize;
+
+  text-shadow: 1px 1px 2px ${(props) => props.theme.text};
 `;
 
 const BtnContainer = styled.div`
@@ -69,6 +72,7 @@ padding: 1.5rem 3rem;
 border-radius: 50px;
 cursor: pointer;
 transition: all 0.2s ease;
+position: relative;
 
 &:hover{
     transform: scale(0.9);
@@ -80,7 +84,7 @@ transition: all 0.2s ease;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    border: 2px solid ${props => props.theme.text};
+    border: 2px solid ${props => props.theme.body};
     width: 100%;
     height: 100%;
     border-radius: 50px;
