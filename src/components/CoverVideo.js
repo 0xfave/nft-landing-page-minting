@@ -9,6 +9,10 @@ video{
     width: 100%;
     height: auto;
 }
+
+@meda (max-width: 64em) {
+  min-width: 40vh;
+}
 `
 
 const CoverVideo = () => {

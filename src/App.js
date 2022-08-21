@@ -1,5 +1,6 @@
 import { ThemeProvider } from 'styled-components';
 import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import About from './components/sections/About';
 import Faq from './components/sections/Faq';
 import Home from './components/sections/Home';
@@ -24,6 +25,7 @@ function App() {
        <Team />
        <Faq />
        <Footer />
+       <ScrollToTop />
       </ThemeProvider>
     </>
   );

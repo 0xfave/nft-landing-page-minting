@@ -30,6 +30,10 @@ const Title = styled.h1`
   margin: 1rem auto;
   border-bottom: 2px solid ${(props) => props.theme.text};
   width: fit-content;
+
+  @media (max-width: 40em) {
+    font-size: ${(props) => props.theme.fontxl};
+  }
 `;
 
 const Container = styled.div`
@@ -40,6 +44,15 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+
+  @media (max-width: 64em) {
+    width: 80%;
+  }
+
+  @media (max-width: 48em) {
+    width: 90%;
+    justify-content: center;
+  }
 `;
 
 const Item = styled.div`
@@ -59,6 +72,10 @@ const Item = styled.div`
     img {
       transform: translateY(-2rem) scale(1.2);
     }
+  }
+
+  @media (max-width: 30em) {
+    width: 70vw;
   }
 `;
 
@@ -113,7 +130,7 @@ const MemberComponent = ({ img, name = " ", position = " " }) => {
 
 const Team = () => {
   return (
-    <Section>
+    <Section id="team">
       <Confetti />
       <Title>Team</Title>
       <Container>
