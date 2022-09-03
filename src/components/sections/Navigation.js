@@ -1,11 +1,59 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Button from "../Button";
 import Logo from "../Logo";
+import Web3Modal from "web3modal";
+import { ethers } from "ethers";
+import { CoinbaseWalletSDK } from "@coinbase/wallet-sdk";
 
 const Section = styled.section`
   width: 100vw;
   background-color: ${(props) => props.theme.body};
+`;
+
+const providerOptions = {
+  coinbasewallet: {
+    package: CoinbaseWalletSDK,
+    options: {
+      appName: "Nft Minting Page",
+      infuraId: { 3: "https://goerli.infura.io/v3/fefnefnesfe" },
+    },
+  },
+};
+
+const Btn = styled.button`
+  display: inline-block;
+  background-color: ${(props) => props.theme.text};
+  color: ${(props) => props.theme.body};
+  outline: none;
+  border: none;
+
+  font-size: ${(props) => props.theme.fontsm};
+  padding: 0.9rem 2.3rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(0.9);
+  }
+
+  &::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    border: 2px solid ${(props) => props.theme.text};
+    width: 100%;
+    height: 100%;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+  }
+
+  &:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+    padding: 0.3rem;
+  }
 `;
 
 const NavBar = styled.nav`
@@ -17,16 +65,16 @@ const NavBar = styled.nav`
   height: ${(props) => props.theme.navHeight};
   margin: 0 auto;
 
-  .mobile{
+  .mobile {
     display: none;
   }
 
   @media (max-width: 64em) {
-    .desktop{
+    .desktop {
       display: none;
     }
 
-    .mobile{
+    .mobile {
       display: inline-block;
     }
   }
@@ -51,7 +99,7 @@ const Menu = styled.ul`
     background-color: ${(props) => `rgba(${props.theme.bodyRgba}, 0.85)`};
     backdrop-filter: blur(2px);
     transform: ${(props) =>
-      props.click ? "translateY(0)" : "translateY(100%)"};
+      props.click ? "translateY(0)" : "translateY(1000%)"};
     transition: all 0.3s ease;
     flex-direction: column;
     justify-content: center;
@@ -133,8 +181,31 @@ const HamburgerMenu = styled.span`
   }
 `;
 
-const Navigation = () => {
+const Navigation = ({ accounts, setAccounts }) => {
   const [click, setClick] = useState(false);
+  const [web3Provider, setWeb3Provider] = useState(null);
+  async function connectWallet() {
+    try {
+      let web3Modal = new Web3Modal({
+        cacheProvider: false,
+        providerOptions,
+      });
+      const web3ModalInstance = await web3Modal.connect();
+      const web3ModalProvider = new ethers.providers.Web3Provider(
+        web3ModalInstance
+      );
+      console.log(web3ModalProvider);
+      const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      setAccounts(accounts);
+      if (web3ModalProvider) {
+        setWeb3Provider(web3ModalProvider);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const scrollTo = (id) => {
     let element = document.getElementById(id);
@@ -164,12 +235,45 @@ const Navigation = () => {
           <MenuItem onClick={() => scrollTo("faq")}>Faq</MenuItem>
           <MenuItem>
             <div className="mobile">
-              <Button text="Connect Wallet" />
+              {web3Provider == null ? (
+                //run if null,
+                <Btn onClick={connectWallet}>Connect Wallet</Btn>
+              ) : (
+                <div>
+                  {/* <p>{ethers.utils.formatEther(web3Provider.provider.getBalance(web3Provider.provider.selectedAddress))} ETH</p> */}
+                  <p>
+                    {web3Provider.provider.selectedAddress.slice(0, 6)}...
+                    {web3Provider.provider.selectedAddress.slice(
+                      web3Provider.provider.selectedAddress.length - 4,
+                      web3Provider.provider.selectedAddress.length
+                    )}
+                  </p>
+                </div>
+              )}
             </div>
           </MenuItem>
         </Menu>
         <div className="desktop">
-          <Button text="Connect Wallet" />
+          {web3Provider == null ? (
+            //run if null,
+            <Btn
+              className="py-2 px-2 font-medium text-white bg-[#7245FA] rounded transition duration-300"
+              onClick={connectWallet}
+            >
+              Connect Wallet
+            </Btn>
+          ) : (
+            <div>
+              {/* <p>{ethers.utils.formatEther(web3Provider.provider.getBalance(web3Provider.provider.selectedAddress))} ETH</p> */}
+              <p>
+                {web3Provider.provider.selectedAddress.slice(0, 6)}...
+                {web3Provider.provider.selectedAddress.slice(
+                  web3Provider.provider.selectedAddress.length - 4,
+                  web3Provider.provider.selectedAddress.length
+                )}
+              </p>
+            </div>
+          )}
         </div>
       </NavBar>
     </Section>
